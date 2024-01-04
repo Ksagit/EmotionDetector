@@ -45,7 +45,7 @@ validation_generator = validation_datagen.flow_from_directory(
     shuffle=True)
 
 # Verify our generator by plotting a few faces and printing corresponding labels
-class_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
+class_labels = ['Happy', 'Sad', 'Neutral']
 
 img, label = train_generator.__next__()
 
@@ -77,7 +77,7 @@ model.add(Flatten())
 model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.2))
 
-model.add(Dense(7, activation='softmax'))
+model.add(Dense(3, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 print(model.summary())
@@ -143,7 +143,7 @@ cm = confusion_matrix(test_labels, predictions)
 
 sns.heatmap(cm, annot=True)
 
-class_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
+class_labels = ['Happy', 'Sad', 'Neutral']
 # Check results on a few select images
 n = random.randint(0, test_img.shape[0] - 1)
 image = test_img[n]
