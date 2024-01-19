@@ -27,7 +27,7 @@ while True:
         roi = keras.utils.img_to_array(roi)
         roi = np.expand_dims(roi, axis=0)  # Expand dims to get it ready for prediction (1, 48, 48, 1)
 
-        predictions = emotion_model.predict(roi)[0]  # Yields one hot encoded result for 7 classes
+        predictions = emotion_model.predict(roi)[0]  # Yields one hot encoded result for 3 classes
         label = class_labels[predictions.argmax()]  # Find the label
         label_position = (x, y)
         cv2.putText(frame, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
