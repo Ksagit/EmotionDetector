@@ -5,10 +5,7 @@ from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from keras.models import load_model
 from matplotlib import pyplot as plt
 from sklearn import metrics
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
 import numpy as np
-import random
 import os
 
 # Image Dimensions and Batch Size
@@ -47,16 +44,6 @@ validation_generator = validation_datagen.flow_from_directory(
     batch_size=batch_size,
     class_mode='categorical',
     shuffle=True)
-
-# Visualize Data: Plot a Random Image and Label
-class_labels = ['Happy', 'Sad', 'Neutral']
-img, label = train_generator.__next__()
-i = random.randint(0, (img.shape[0]) - 1)
-image = img[i]
-labl = class_labels[label[i].argmax()]
-plt.imshow(image[:, :, 0], cmap='gray')
-plt.title(labl)
-plt.show()
 
 # Create the Model
 model = Sequential()
@@ -135,17 +122,3 @@ predictions = my_model.predict(test_img)
 predictions = np.argmax(predictions, axis=1)
 test_labels = np.argmax(test_lbl, axis=1)
 print("Accuracy = ", metrics.accuracy_score(test_labels, predictions))
-
-# Confusion Matrix
-cm = confusion_matrix(test_labels, predictions)
-sns.heatmap(cm, annot=True)
-
-# Visualize Results: Plot a Random Image with Original and Predicted Labels
-class_labels = ['Happy', 'Sad', 'Neutral']
-n = random.randint(0, test_img.shape[0] - 1)
-image = test_img[n]
-orig_labl = class_labels[test_labels[n]]
-pred_labl = class_labels[predictions[n]]
-plt.imshow(image[:, :, 0], cmap='gray')
-plt.title("Original label is:" + orig_labl + " Predicted is: " + pred_labl)
-plt.show()
